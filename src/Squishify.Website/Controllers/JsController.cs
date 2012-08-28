@@ -26,7 +26,9 @@ namespace Squishify.Website.Controllers {
 
             switch((minifier ?? string.Empty).ToLowerInvariant()) {
                 //case "closure":
-                //    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
+                //    var closure = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
+                //    minifiedContent = closure.Minify(source);
+                //    usedMinifier = "ClosureMinifier";
                 //    break;
                 case "jsmin":
                     var jsMin = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();

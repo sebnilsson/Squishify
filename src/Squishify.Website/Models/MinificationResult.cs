@@ -10,7 +10,10 @@
                     return 0;
                 }
 
-                return (MinifiedSize * 100) / OriginalSize;
+                double org = OriginalSize;
+                double min = MinifiedSize;
+                
+                return (int)((1 - (min / org)) * 100);
             }
         }
     }
