@@ -24,16 +24,16 @@ namespace Squishify.Website.Controllers {
 
             switch((minifier ?? string.Empty).ToLowerInvariant()) {
                 case "ms":
-                    var msCompressor = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
-                    minifiedContent = msCompressor.Minify(source);
+                    var ms = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
+                    minifiedContent = ms.Minify(source);
                     usedMinifier = "MsCompressor";
                     break;
                 case "yui":
-                    var yuiCompressor = new Yahoo.Yui.Compressor.CssCompressor {
+                    var yui = new Yahoo.Yui.Compressor.CssCompressor {
                         CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
                         RemoveComments = true,
                     };
-                    minifiedContent = yuiCompressor.Compress(source);
+                    minifiedContent = yui.Compress(source);
                     usedMinifier = "YuiCompressor";
                     break;
                 default:
@@ -42,6 +42,8 @@ namespace Squishify.Website.Controllers {
                     usedMinifier = "NullCompressor";
                     break;
             }
+
+            minifiedContent = minifiedContent.TrimStart('\n', ' ');
 
             return new MinificationResult {
                 MinifiedContent = minifiedContent,

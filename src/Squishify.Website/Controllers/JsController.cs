@@ -21,31 +21,44 @@ namespace Squishify.Website.Controllers {
                 throw new ArgumentNullException("minifier");
             }
 
-            IMinifier<JavaScriptBundle> jsMinifier;
+            string minifiedContent = string.Empty;
+            string usedMinifier = string.Empty;
+
             switch((minifier ?? string.Empty).ToLowerInvariant()) {
                 //case "closure":
                 //    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
                 //    break;
                 case "jsmin":
-                    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();
+                    var jsMin = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();
+                    minifiedContent = jsMin.Minify(source);
+                    usedMinifier = "JsMinMinifier";
                     break;
                 case "msmin":
-                    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.MsMinifier();
+                    var ms = new SquishIt.Framework.Minifiers.JavaScript.MsMinifier();
+                    minifiedContent = ms.Minify(source);
+                    usedMinifier = "MsMinifier";
                     break;
                 case "yui":
-                    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.YuiMinifier();
+                    var yui = new Yahoo.Yui.Compressor.JavaScriptCompressor {
+                        CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
+                        DisableOptimizations = false,
+                    };
+                    minifiedContent = yui.Compress(source);
+                    usedMinifier = "YuiMinifier";
                     break;
                 default:
-                    jsMinifier = new SquishIt.Framework.Minifiers.JavaScript.NullMinifier();
+                    var nullMinifier = new SquishIt.Framework.Minifiers.JavaScript.NullMinifier();
+                    minifiedContent = nullMinifier.Minify(source);
+                    usedMinifier = "NullMinifier";
                     break;
             }
 
-            string minifiedContent = jsMinifier.Minify(source).TrimStart('\n');
-
+            minifiedContent = minifiedContent.TrimStart('\n', ' ');
+            
             return new MinificationResult {
                 MinifiedContent = minifiedContent,
                 MinifiedSize = minifiedContent.Length,
-                Minifier = jsMinifier.GetType().Name,
+                Minifier = usedMinifier,
                 OriginalSize = source.Length,
             };
         }
