@@ -29,7 +29,11 @@ namespace Squishify.Website.Controllers {
                     usedMinifier = "MsCompressor";
                     break;
                 case "yui":
-                    minifiedContent = Yahoo.Yui.Compressor.CssCompressor.Compress(source, 0, Yahoo.Yui.Compressor.CssCompressionType.Hybrid, true);
+                    var yuiCompressor = new Yahoo.Yui.Compressor.CssCompressor {
+                        CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
+                        RemoveComments = true,
+                    };
+                    minifiedContent = yuiCompressor.Compress(source);
                     usedMinifier = "YuiCompressor";
                     break;
                 default:
