@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "CSS";
+}
+
+@section NavLinks {
+    or @Html.ActionLink("JavaScript", "Js")
+}
+
+@Html.Hidden("action", "css")
+
+@(Html.DropDownList("minifier", new[] {
+    new SelectListItem { Text = "MsCompressor", Value = "ms" },
+    new SelectListItem { Selected = true, Text = "YUI", Value = "yui" },
+}))

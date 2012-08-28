@@ -1,0 +1,119 @@
+﻿body {
+    background-color: #000;
+    font-family: Trebuchet MS, Arial, Serif;
+}
+
+.clear {
+    clear: both;
+}
+
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 768px;
+}
+
+#main-content {    
+    background-color: #B8B8FF;
+    border-left: 2px solid #555;
+    border-right: 2px solid #777;
+    border-top: 2px solid #999;
+    margin-bottom: 10px;
+    padding: 20px 25px 20px 20px;
+}
+
+#app-info {
+    background-color: #ccc;
+    border: 1px solid #999;
+    color: #555555;
+    margin: 10px 50px 0;
+    padding-top: 0.5em;
+}
+#app-info header {
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 0px 10px;
+}
+#app-info p {
+    margin-bottom: 0px;
+    font-size: 0.75em;
+    font-style: italic;
+    padding: 0px 10px;
+}
+
+#app-info #created-by {
+    background-color: #999;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+h1 {
+    margin: 0em;
+}
+
+.nav-link {
+    border-bottom: 1px solid #000;
+    font-style: italic;
+    margin-bottom: 0.5em;
+    padding-bottom: 1em;
+}
+
+div.section {
+    padding: 0.8em 0;
+}
+
+.header {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.type-list {
+    padding-top: 3px;
+}
+
+.type-list-item {
+    background-color: #fff;
+    border: 1px solid #000;
+    float: left;
+    display: inline;
+    margin: 0 2px 4px;
+    padding: 2px 8px;
+}
+.type-list-item.first {
+    margin-left: 0px !important;
+}
+
+label {
+    display: block;
+}
+
+label.radio-button-label {
+    display: inline;
+}
+
+textarea {
+    border: 1px solid #000;
+    font-family: Consolas,Sans-Serif;
+    height: 120px;
+    padding: 5px;
+    width: 99%;
+}
+
+button {
+    padding: 5px 10px;
+}
+
+#button-section.loading {
+    background-image: url("/content/ajax-loader.gif");
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+#button-section.loading button {
+    visibility: hidden;
+}
+
+#source-text.error {
+    background-color: #f55;
+}
