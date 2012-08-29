@@ -10,12 +10,12 @@
     
     @(Html.BundleJavaScript()
         .Add("~/Scripts/Html5Shiv.js")
-        .MvcRender("top-min.js"))
+        .MvcRender("top-min.#.js"))
 
     @(Html.BundleCss()
         .Add("~/Content/Reset.css")
         .Add("~/Content/Site.css")
-        .MvcRender("main-min.css"))
+        .MvcRender("main-min.#.css"))
 </head>
 <body>
     <div id="wrapper">
@@ -66,7 +66,7 @@
         .Add("~/Scripts/jquery.corner.js")
         .Add("~/Scripts/json2.js")
         .Add("~/Content/site.js")
-        .MvcRender("bottom-min.js"))
+        .MvcRender("bottom-min.#.js"))
 
     <script type="text/javascript">
         var _gaq = _gaq || [];

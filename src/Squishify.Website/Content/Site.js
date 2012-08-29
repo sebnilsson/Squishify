@@ -7,6 +7,12 @@ $(function () {
     $('textarea').corner('5px');
     $('.type-list-item').corner('8px');
 
+    var winHeight = $(window).height() - 450;
+    if (winHeight < 150) {
+        winHeight = 150;
+    }
+    $('textarea').height(winHeight);
+
     $('#source-text').select();
 
     var sendRequest = function (button, url) {
