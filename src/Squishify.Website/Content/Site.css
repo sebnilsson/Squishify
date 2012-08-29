@@ -94,7 +94,8 @@ label.radio-button-label {
 textarea {
     border: 1px solid #000;
     font-family: Consolas,Sans-Serif;
-    height: 120px;
+    font-size: 0.8em;
+    height: 300px;
     padding: 5px;
     width: 99%;
 }

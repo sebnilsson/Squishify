@@ -33,6 +33,10 @@ $(function () {
                 setStats(data.OriginalSize, data.MinifiedSize, (data.Difference || 0) + '%');
 
                 setUiDone();
+
+                $('html,body').animate({
+                    scrollTop: $('#result-text').offset().top
+                }, 'slow');
             },
             error: function () {
                 $('#result-text').val('');
