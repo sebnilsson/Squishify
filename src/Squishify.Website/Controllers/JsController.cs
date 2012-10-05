@@ -3,8 +3,6 @@ using System.Web.Http;
 
 using Newtonsoft.Json.Linq;
 using Squishify.Website.Models;
-using SquishIt.Framework.JavaScript;
-using SquishIt.Framework.Minifiers;
 
 namespace Squishify.Website.Controllers {
     public class JsController : ApiController {
@@ -12,57 +10,44 @@ namespace Squishify.Website.Controllers {
         public MinificationResult Get(JObject jsonData) {
             dynamic json = jsonData;
             string source = json.source;
-            string minifier = json.minifier;
 
             if(string.IsNullOrWhiteSpace(source)) {
                 throw new ArgumentNullException("source");
             }
-            if(string.IsNullOrWhiteSpace(minifier)) {
-                throw new ArgumentNullException("minifier");
-            }
 
-            string minifiedContent = string.Empty;
-            string usedMinifier = string.Empty;
-
-            switch((minifier ?? string.Empty).ToLowerInvariant()) {
-                //case "closure":
-                //    var closure = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
-                //    minifiedContent = closure.Minify(source);
-                //    usedMinifier = "ClosureMinifier";
-                //    break;
-                case "jsmin":
-                    var jsMin = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();
-                    minifiedContent = jsMin.Minify(source);
-                    usedMinifier = "JsMinMinifier";
-                    break;
-                case "msmin":
-                    var ms = new SquishIt.Framework.Minifiers.JavaScript.MsMinifier();
-                    minifiedContent = ms.Minify(source);
-                    usedMinifier = "MsMinifier";
-                    break;
-                case "yui":
-                    var yui = new Yahoo.Yui.Compressor.JavaScriptCompressor {
-                        CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
-                        DisableOptimizations = false,
-                    };
-                    minifiedContent = yui.Compress(source);
-                    usedMinifier = "YuiMinifier";
-                    break;
-                default:
-                    var nullMinifier = new SquishIt.Framework.Minifiers.JavaScript.NullMinifier();
-                    minifiedContent = nullMinifier.Minify(source);
-                    usedMinifier = "NullMinifier";
-                    break;
-            }
-
-            minifiedContent = minifiedContent.TrimStart('\n', ' ');
-            
-            return new MinificationResult {
-                MinifiedContent = minifiedContent,
-                MinifiedSize = minifiedContent.Length,
-                Minifier = usedMinifier,
+            var result = new MinificationResult {
                 OriginalSize = source.Length,
             };
+
+            var jsMin = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();
+            string jsMinContent = jsMin.Minify(source).TrimStart('\n', ' ');
+
+            var jsMinResultType = new MinificationType(result, "JsMinMinifier") {
+                MinifiedContent = jsMinContent,
+                MinifiedSize = jsMinContent.Length,
+            };
+
+            var ms = new SquishIt.Framework.Minifiers.JavaScript.MsMinifier();
+            string msConfig = ms.Minify(source).TrimStart('\n', ' ');
+
+            var msResultType = new MinificationType(result, "MsMinifier") {
+                MinifiedContent = msConfig,
+                MinifiedSize = msConfig.Length,
+            };
+
+            var yui = new Yahoo.Yui.Compressor.JavaScriptCompressor {
+                CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
+                DisableOptimizations = false,
+            };
+            string yuiContent = yui.Compress(source).TrimStart('\n', ' ');
+
+            var yuiResultType = new MinificationType(result, "YuiMinifier") {
+                MinifiedContent = yuiContent,
+                MinifiedSize = yuiContent.Length,
+            };
+
+            result.Types = new[] { jsMinResultType, msResultType, yuiResultType, };
+            return result;
         }
     }
 }

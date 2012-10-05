@@ -33,10 +33,7 @@
                 @RenderSection("NavLinks", false)
             </div>
 
-            <div class="section">
-                <div class="header">Minifier</div>
-                @RenderBody()
-            </div>
+            @RenderBody()
 
             <div class="section">
                 @Html.Label("source-text", "Source code", new { @class = "header" })
@@ -46,6 +43,8 @@
             <div id="button-section" class="section">
             <button id="minify">Minify</button>
             </div>
+
+            <div id="minifier-types"></div>
 
             <div class="section">
                 @Html.Label("result-text", "Result", new { @class = "header" })
@@ -59,9 +58,9 @@
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>    
-    <script>window.jQuery || document.write('<script src="@Url.Content("~/scripts/jquery-1.8.0.min.js")"><\/script>')</script>
-        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>    
+    <script>window.jQuery || document.write('<script src="@Url.Content("~/scripts/jquery-1.8.2.min.js")"><\/script>')</script>
+    
     @(Html.BundleJavaScript()
         .Add("~/Scripts/jquery.corner.js")
         .Add("~/Scripts/json2.js")

@@ -135,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MinificationResult.cs" />
+    <Compile Include="Models\MinificationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,8 +146,8 @@
     <Content Include="Content\Site.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.8.0.min.js" />
-    <Content Include="Scripts\jquery-1.8.0.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Web.config" />
     <Content Include="Content\Site.css" />

@@ -1,19 +1,26 @@
-﻿namespace Squishify.Website.Models {
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using Newtonsoft.Json;
+
+namespace Squishify.Website.Models {
+    [JsonObject(Title = "minificationResult")]
     public class MinificationResult {
+        [JsonProperty(PropertyName = "originalSize")]
         public int OriginalSize { get; set; }
-        public int MinifiedSize { get; set; }
-        public string MinifiedContent { get; set; }
-        public string Minifier { get; set; }
-        public int Difference {
+
+        [JsonProperty(PropertyName = "types")]
+        public IEnumerable<MinificationType> Types { get; set; }
+
+        [JsonProperty(PropertyName = "smallest")]
+        public string Smallest {
             get {
-                if(OriginalSize == 0) {
-                    return 0;
+                if(this.Types == null || !this.Types.Any()) {
+                    return string.Empty;
                 }
 
-                double org = OriginalSize;
-                double min = MinifiedSize;
-                
-                return (int)((1 - (min / org)) * 100);
+                string smallest = this.Types.OrderBy(x => x.MinifiedSize).First().Id;
+                return smallest;
             }
         }
     }

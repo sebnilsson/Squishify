@@ -10,47 +10,36 @@ namespace Squishify.Website.Controllers {
         public MinificationResult Get(JObject jsonData) {
             dynamic json = jsonData;
             string source = json.source;
-            string minifier = json.minifier;
 
             if(string.IsNullOrWhiteSpace(source)) {
                 throw new ArgumentNullException("source");
             }
-            if(string.IsNullOrWhiteSpace(minifier)) {
-                throw new ArgumentNullException("minifier");
-            }
 
-            string minifiedContent = string.Empty;
-            string usedMinifier = string.Empty;
-
-            switch((minifier ?? string.Empty).ToLowerInvariant()) {
-                case "ms":
-                    var ms = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
-                    minifiedContent = ms.Minify(source);
-                    usedMinifier = "MsCompressor";
-                    break;
-                case "yui":
-                    var yui = new Yahoo.Yui.Compressor.CssCompressor {
-                        CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
-                        RemoveComments = true,
-                    };
-                    minifiedContent = yui.Compress(source);
-                    usedMinifier = "YuiCompressor";
-                    break;
-                default:
-                    var nullCompressor = new SquishIt.Framework.Minifiers.CSS.NullCompressor();
-                    minifiedContent = nullCompressor.Minify(source);
-                    usedMinifier = "NullCompressor";
-                    break;
-            }
-
-            minifiedContent = minifiedContent.TrimStart('\n', ' ');
-
-            return new MinificationResult {
-                MinifiedContent = minifiedContent,
-                MinifiedSize = minifiedContent.Length,
-                Minifier = usedMinifier,
+            var result = new MinificationResult {
                 OriginalSize = source.Length,
             };
+
+            var ms = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
+            var msContent = ms.Minify(source).TrimStart('\n', ' ');
+
+            var msResultType = new MinificationType(result, "MsCompressor") {
+                MinifiedContent = msContent,
+                MinifiedSize = msContent.Length,
+            };
+
+            var yui = new Yahoo.Yui.Compressor.CssCompressor {
+                CompressionType = Yahoo.Yui.Compressor.CompressionType.Standard,
+                RemoveComments = true,
+            };
+            var yuiContent = yui.Compress(source).TrimStart('\n', ' ');
+
+            var yuiResultType = new MinificationType(result, "YuiCompressor") {
+                MinifiedContent = yuiContent,
+                MinifiedSize = yuiContent.Length,
+            };
+
+            result.Types = new[] { msResultType, yuiResultType, };
+            return result;
         }
     }
 }

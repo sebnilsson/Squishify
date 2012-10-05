@@ -2,6 +2,9 @@
 /// <reference path="~/Scripts/json2.js" />
 
 $(function () {
+    var originalSize = 0;
+    var resultTypes = {};
+
     $('#app-info').corner('top 15px');
     $('#main-content').corner('20px');
     $('textarea').corner('5px');
@@ -35,10 +38,20 @@ $(function () {
                 }
             },
             success: function (data) {
-                $('#result-text').val(data.MinifiedContent || '');
-                setStats(data.OriginalSize, data.MinifiedSize, (data.Difference || 0) + '%');
+                originalSize = data.originalSize;
 
-                setUiDone();
+                var $types = $('#minifier-types');
+                $types.empty();
+                for (var i = 0; i < data.types.length; i++) {
+                    var type = data.types[i];
+                    var id = type.id;
+                    var title = type.id + ' (' + (type.difference || 0) + '%)';
+                    resultTypes[id] = type;
+
+                    $types.append('<a href="#" data-type-id="' + id + '">' + title + '</a>');
+                }
+
+                setSelectedType(data.smallest);
 
                 $('html,body').animate({
                     scrollTop: $('#result-text').offset().top
@@ -75,5 +88,24 @@ $(function () {
 
         $('#source-text').removeClass('error');
         sendRequest(this);
+    });
+
+    var setSelectedType = function (typeNameId) {
+        $('#minifier-types a').removeClass('selected');
+        $('#minifier-types a[data-type-id="' + typeNameId + '"]').addClass('selected');
+
+        var resultType = resultTypes[typeNameId];
+
+        $('#result-text').val(resultType.minifiedContent || '');
+        setStats(originalSize, resultType.minifiedSize, (resultType.difference || 0) + '%');
+
+        setUiDone();
+    }
+
+    $('#minifier-types').on('click', 'a', function (e) {
+        e.preventDefault();
+
+        var type = $(this).attr('data-type-id');
+        setSelectedType(type);
     });
 });

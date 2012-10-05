@@ -118,3 +118,11 @@ button {
 #source-text.error {
     background-color: #f55;
 }
+
+#minifier-types a {
+    padding: 0.25em 0.5em;
+}
+#minifier-types a.selected {
+    background-color: #fff;
+    border: 1px solid #555;
+}

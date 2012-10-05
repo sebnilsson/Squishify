@@ -7,10 +7,3 @@
 }
 
 @Html.Hidden("action", "js")
-
-@(Html.DropDownList("minifier", new[] {
-    //new SelectListItem { Text = "Closure", Value = "closure" },
-    new SelectListItem { Selected = true, Text = "JsMin", Value = "jsmin" },
-    new SelectListItem { Text = "MsMin", Value = "msmin" },
-    new SelectListItem { Text = "YUI", Value = "yui" },
-}))
