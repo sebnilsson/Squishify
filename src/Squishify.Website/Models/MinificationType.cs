@@ -11,7 +11,13 @@ namespace Squishify.Website.Models {
         }
 
         [JsonProperty(PropertyName = "minifiedSize")]
-        public int MinifiedSize { get; set; }
+        public string MinifiedSizeText {
+            get {
+                return this.MinifiedSize.ToString();
+            }
+        }
+
+        public FileSize MinifiedSize { get; set; }
 
         [JsonProperty(PropertyName = "minifiedContent")]
         public string MinifiedContent { get; set; }
@@ -22,12 +28,12 @@ namespace Squishify.Website.Models {
         [JsonProperty(PropertyName = "difference")]
         public int Difference {
             get {
-                if(_result.OriginalSize == 0) {
+                if(_result.OriginalSize.Value == 0) {
                     return 0;
                 }
 
-                double org = _result.OriginalSize;
-                double min = MinifiedSize;
+                double org = _result.OriginalSize.Value;
+                double min = MinifiedSize.Value;
 
                 return (int)((1 - (min / org)) * 100);
             }

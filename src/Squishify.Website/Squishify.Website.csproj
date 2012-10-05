@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CssController.cs" />
+    <Compile Include="Models\FileSize.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsController.cs" />
     <Compile Include="Global.asax.cs">

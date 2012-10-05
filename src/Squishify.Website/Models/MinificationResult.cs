@@ -7,7 +7,13 @@ namespace Squishify.Website.Models {
     [JsonObject(Title = "minificationResult")]
     public class MinificationResult {
         [JsonProperty(PropertyName = "originalSize")]
-        public int OriginalSize { get; set; }
+        public string OriginalSizeText {
+            get {
+                return this.OriginalSize.ToString();
+            }
+        }
+
+        public FileSize OriginalSize { get; set; }
 
         [JsonProperty(PropertyName = "types")]
         public IEnumerable<MinificationType> Types { get; set; }
@@ -19,7 +25,7 @@ namespace Squishify.Website.Models {
                     return string.Empty;
                 }
 
-                string smallest = this.Types.OrderBy(x => x.MinifiedSize).First().Id;
+                string smallest = this.Types.OrderBy(x => x.MinifiedSize.Value).First().Id;
                 return smallest;
             }
         }

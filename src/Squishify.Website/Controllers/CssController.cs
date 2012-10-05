@@ -16,7 +16,7 @@ namespace Squishify.Website.Controllers {
             }
 
             var result = new MinificationResult {
-                OriginalSize = source.Length,
+                OriginalSize = new FileSize(source.Length),
             };
 
             var ms = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
@@ -24,7 +24,7 @@ namespace Squishify.Website.Controllers {
 
             var msResultType = new MinificationType(result, "MsCompressor") {
                 MinifiedContent = msContent,
-                MinifiedSize = msContent.Length,
+                MinifiedSize = new FileSize(msContent.Length),
             };
 
             var yui = new Yahoo.Yui.Compressor.CssCompressor {
@@ -35,7 +35,7 @@ namespace Squishify.Website.Controllers {
 
             var yuiResultType = new MinificationType(result, "YuiCompressor") {
                 MinifiedContent = yuiContent,
-                MinifiedSize = yuiContent.Length,
+                MinifiedSize = new FileSize(yuiContent.Length),
             };
 
             result.Types = new[] { msResultType, yuiResultType, };
