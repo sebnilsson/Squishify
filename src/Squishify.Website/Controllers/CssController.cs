@@ -19,7 +19,7 @@ namespace Squishify.Website.Controllers {
                 OriginalSize = new FileSize(source.Length),
             };
 
-            var ms = new SquishIt.Framework.Minifiers.CSS.MsCompressor();
+            var ms = new SquishIt.Framework.Minifiers.CSS.MsMinifier();
             var msContent = ms.Minify(source).TrimStart('\n', ' ');
 
             var msResultType = new MinificationType(result, "MsCompressor") {
