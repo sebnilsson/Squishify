@@ -1,27 +1,34 @@
 ﻿using System;
 
-namespace Squishify.Website.Models {
-    public class FileSize {
-        public FileSize(long size) {
+namespace Squishify.Website.Models
+{
+    public class FileSize
+    {
+        private static readonly string[] Units = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+        public FileSize(long size)
+        {
             this.Value = size;
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return ReadableFileSize(this.Value);
         }
 
         public long Value { get; set; }
 
-        private static string ReadableFileSize(double size) {
-            string[] units = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-
-            int unit = 0;
-            while(size >= 1024) {
+        private static string ReadableFileSize(double size)
+        {
+            int unitIndex = 0;
+            while (size >= 1024)
+            {
                 size /= 1024;
-                ++unit;
+                ++unitIndex;
             }
 
-            return String.Format("{0:0.#} {1}", size, units[unit]);
+            string unit = Units[unitIndex];
+            return string.Format("{0:0.#} {1}", size, unit);
         }
     }
 }

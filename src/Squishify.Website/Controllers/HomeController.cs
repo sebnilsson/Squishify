@@ -1,16 +1,21 @@
 ﻿using System.Web.Mvc;
 
-namespace Squishify.Website.Controllers {
-    public class HomeController : Controller {
-        public ActionResult Index() {
+namespace Squishify.Website.Controllers
+{
+    public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
             return RedirectToActionPermanent("Js");
         }
 
-        public ActionResult Js() {
+        public ActionResult Js()
+        {
             return View();
         }
 
-        public ActionResult Css() {
+        public ActionResult Css()
+        {
             return View();
         }
     }

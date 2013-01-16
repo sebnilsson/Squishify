@@ -3,12 +3,16 @@ using System.Linq;
 
 using Newtonsoft.Json;
 
-namespace Squishify.Website.Models {
+namespace Squishify.Website.Models
+{
     [JsonObject(Title = "minificationResult")]
-    public class MinificationResult {
+    public class MinificationResult
+    {
         [JsonProperty(PropertyName = "originalSize")]
-        public string OriginalSizeText {
-            get {
+        public string OriginalSizeText
+        {
+            get
+            {
                 return this.OriginalSize.ToString();
             }
         }
@@ -19,9 +23,12 @@ namespace Squishify.Website.Models {
         public IEnumerable<MinificationType> Types { get; set; }
 
         [JsonProperty(PropertyName = "smallest")]
-        public string Smallest {
-            get {
-                if(this.Types == null || !this.Types.Any()) {
+        public string Smallest
+        {
+            get
+            {
+                if (this.Types == null || !this.Types.Any())
+                {
                     return string.Empty;
                 }
 
