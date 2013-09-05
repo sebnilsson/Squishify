@@ -21,14 +21,16 @@ namespace Squishify.Website.Controllers
 
             var result = new MinificationResult { OriginalSize = new FileSize(source.Length), };
 
-            //var closureMin = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
-            //string closeureMinContent = closureMin.Minify(source).TrimStart('\n', ' ');
+            var closureMin = new SquishIt.Framework.Minifiers.JavaScript.ClosureMinifier();
+            string closeureMinContent = closureMin.Minify(source).TrimStart('\n', ' ');
 
-            //var closureResultType = new MinificationType(result, "JsMinMinifier")
-            //{
-            //    MinifiedContent = closeureMinContent,
-            //    MinifiedSize = new FileSize(closeureMinContent.Length),
-            //};
+            var closureResultType = new MinificationType(result, "JsMinMinifier")
+                                        {
+                                            MinifiedContent = closeureMinContent,
+                                            MinifiedSize =
+                                                new FileSize(
+                                                closeureMinContent.Length),
+                                        };
 
             var jsMin = new SquishIt.Framework.Minifiers.JavaScript.JsMinMinifier();
             string jsMinContent = jsMin.Minify(source).TrimStart('\n', ' ');
@@ -65,7 +67,7 @@ namespace Squishify.Website.Controllers
                                             new FileSize(yuiContent.Length),
                                     };
 
-            result.Types = new[] { jsMinResultType, msResultType, yuiResultType, }; // closureResultType
+            result.Types = new[] { jsMinResultType, msResultType, yuiResultType, closureResultType };
             return result;
         }
     }
